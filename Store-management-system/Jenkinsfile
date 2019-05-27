@@ -4,7 +4,7 @@ pipeline {
         stage('build with unit test, package and store the jar') {
             steps {
             	echo 'Building app...'
-                sh 'mvn -U -f bookstore_app clean install -Dintegration-tests.skip=true'
+                sh 'mvn -U -f Store-management-system clean install -Dintegration-tests.skip=true'
                 //sh 'mvn -f bookstore_app -Pbuild clean install  -Dskip.it=true'
             }
         }
@@ -15,7 +15,7 @@ pipeline {
                 // shutdown
 			    sh 'curl -X POST http://localhost:8080/shutdown || true'
 			    // start the application
-				sh 'ls -l bookstore_app/bookstore-integration-test/target/classes/bookstore-server-0.0.1-SNAPSHOT.jar'
+				sh 'ls -l Store-management-system/foco-store-integration/target/classes/bookstore-server-0.0.1-SNAPSHOT.jar'
                 sh 'nohup java -jar bookstore_app/bookstore-integration-test/target/classes/*.jar &'			   
                 //sh 'cat nohup.out'                            
             }
@@ -24,7 +24,7 @@ pipeline {
         stage('run integration tests') {
             steps {
             	echo 'Running integration tests...'
-                sh 'mvn -f bookstore_app verify -Dunit-tests.skip=true'
+                sh 'mvn -f Store-management-system verify -Dunit-tests.skip=true'
             	//sh 'mvn -f bookstore_app -Pintegration clean test -DskipUTs'
             }
         }

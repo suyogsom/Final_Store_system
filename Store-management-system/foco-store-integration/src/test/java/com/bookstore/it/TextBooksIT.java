@@ -13,7 +13,7 @@ public class TextBooksIT extends BaseTest {
 	
 	Response response;
 	JsonPath js;
-	String ID;
+	Integer ID;
 
 	@Test
 	@DisplayName("Getting all textbooks")
@@ -25,16 +25,16 @@ public class TextBooksIT extends BaseTest {
 		System.out.print("\nAll text books : " + response.asString() + "\n");
 	}
 	
-//	@Test
-//	@Disabled
-//	@DisplayName("Getting a textbook with name")
-//	public void getTextBookByName() {
-//		response = given().spec(restClient.getRecSpec())
-//				   .basePath("/books")
-//				   .get("/textbooks/java")
-//				   .then().assertThat().statusCode(200).extract().response();
-//		System.out.print("\nText books with name java : " + response.asString() + "\n");
-//	}
+	@Test
+	@Disabled
+	@DisplayName("Getting a textbook with ID")
+	public void getTextBookByName() {
+		response = given().spec(restClient.getRecSpec())
+				   .basePath("/books")
+				   .get("/textbooks/1")
+				   .then().assertThat().statusCode(200).extract().response();
+		System.out.print("\nText books with name java : " + response.asString() + "\n");
+	}
 	
 	@Test
 	@DisplayName("Adding a textbook")

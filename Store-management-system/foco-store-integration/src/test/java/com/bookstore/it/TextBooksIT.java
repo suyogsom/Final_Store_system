@@ -26,7 +26,6 @@ public class TextBooksIT extends BaseTest {
 	}
 	
 	@Test
-	@Disabled
 	@DisplayName("Getting a textbook with ID")
 	public void getTextBookByName() {
 		response = given().spec(restClient.getRecSpec())
@@ -39,7 +38,7 @@ public class TextBooksIT extends BaseTest {
 	@Test
 	@DisplayName("Adding a textbook")
 	public void addTextBook() {		
-		String body = "{ \"department\": \"CS-2\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4, \"id\": \"1005\" }";
+		String body = "{ \"department\": \"CS-2\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4}";
 		
 		response = given().spec(restClient.getRecSpec())
 				   .basePath("/books").body(body)
@@ -60,7 +59,7 @@ public class TextBooksIT extends BaseTest {
 	@Test
 	@DisplayName("Updating a textbook")
 	public void updateTextBook() {				
-		String body = "{ \"department\": \"CS-23\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4, \"id\": \"1005\" }";
+		String body = "{ \"department\": \"CS-23\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
 		response = given().spec(restClient.getRecSpec())
 				   .basePath("/books").body(body)
@@ -74,7 +73,7 @@ public class TextBooksIT extends BaseTest {
 		js = new JsonPath(postResponse.asString());
 		ID = js.get("[2].id");
 		
-		String bodyUpdate = "{ \"department\": \"CS-23-01\", \"name\": \"Java update\", \"description\": \"this is java book update\", \"isbn\": \"23123\", \"unitPrice\": 231123.3, \"id\": \"1006\" }";
+		String bodyUpdate = "{ \"department\": \"CS-23-01\", \"name\": \"Java update\", \"description\": \"this is java book update\", \"isbn\": \"23123\", \"unitPrice\": 231123.3, \"id\":" + ID + "\" }";
 		
 		System.out.println("\nID is " + ID);
 		
@@ -94,7 +93,7 @@ public class TextBooksIT extends BaseTest {
 	@Test
 	@DisplayName("Deleting a textbook")
 	public void deleteTextBook() {
-		String body = "{ \"department\": \"CS-23\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4, \"id\": \"1007\" }";
+		String body = "{ \"department\": \"CS-23\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
 		response = given().spec(restClient.getRecSpec())
 				   .basePath("/books").body(body)

@@ -1,0 +1,5 @@
+/Users/suyogsomavanshi/git/Final_Store_system/Store-management-system/foco-store-server/src/main/java/com/bookstore/app/StoreApiDatabaseApplication.java
+/Users/suyogsomavanshi/git/Final_Store_system/Store-management-system/foco-store-server/src/main/java/com/bookstore/app/repositories/TextBooksCRUDRepo.java
+/Users/suyogsomavanshi/git/Final_Store_system/Store-management-system/foco-store-server/src/main/java/com/bookstore/app/services/TextBooksServiceCRUDRepo.java
+/Users/suyogsomavanshi/git/Final_Store_system/Store-management-system/foco-store-server/src/main/java/com/bookstore/app/models/TextBooks.java
+/Users/suyogsomavanshi/git/Final_Store_system/Store-management-system/foco-store-server/src/main/java/com/bookstore/app/controllers/TextBooksController.java

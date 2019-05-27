@@ -15,8 +15,8 @@ pipeline {
                 // shutdown
 			    sh 'curl -X POST http://localhost:8080/shutdown || true'
 			    // start the application
-				sh 'ls -l Store-management-system/foco-store-integration/target/classes/bookstore-server-0.0.1-SNAPSHOT.jar'
-                sh 'nohup java -jar bookstore_app/bookstore-integration-test/target/classes/*.jar &'			   
+				sh 'ls -l Store-management-system/foco-store-integration/target/classes/foco-store-integration-0.0.1-SNAPSHOT.jar'
+                sh 'nohup java -jar Store-management-system/foco-store-integration/target/classes/*.jar &'			   
                 //sh 'cat nohup.out'                            
             }
         }

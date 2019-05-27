@@ -74,9 +74,9 @@ public class TextBooksControllerTest {
         
     	when(textBooksController.getTextbook(101)).thenReturn(book1);
     	
-    	//TextBooks book = textBooksService.getTextbook("101");
+    	TextBooks book = textBooksService.getTextbook(101);
     	
-    	//assertEquals("101", book.getId());
+    	assertEquals("101", book.getId());
 	  }
     
     @Test

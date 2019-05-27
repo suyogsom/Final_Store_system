@@ -2,6 +2,7 @@ package com.bookstore.it;
 
 import static io.restassured.RestAssured.given;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,15 +25,16 @@ public class TextBooksIT extends BaseTest {
 		System.out.print("\nAll text books : " + response.asString() + "\n");
 	}
 	
-	@Test
-	@DisplayName("Getting a textbook with name")
-	public void getTextBookByName() {
-		response = given().spec(restClient.getRecSpec())
-				   .basePath("/books")
-				   .get("/textbooks/java")
-				   .then().assertThat().statusCode(200).extract().response();
-		System.out.print("\nText books with name java : " + response.asString() + "\n");
-	}
+//	@Test
+//	@Disabled
+//	@DisplayName("Getting a textbook with name")
+//	public void getTextBookByName() {
+//		response = given().spec(restClient.getRecSpec())
+//				   .basePath("/books")
+//				   .get("/textbooks/java")
+//				   .then().assertThat().statusCode(200).extract().response();
+//		System.out.print("\nText books with name java : " + response.asString() + "\n");
+//	}
 	
 	@Test
 	@DisplayName("Adding a textbook")

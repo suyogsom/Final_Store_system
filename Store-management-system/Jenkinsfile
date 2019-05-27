@@ -24,7 +24,7 @@ pipeline {
         stage('run integration tests') {
             steps {
             	echo 'Running integration tests...'
-                sh 'mvn -f Store-management-system verify -Dunit-tests.skip=true'
+                sh 'mvn -f Store-management-system test -Dunit-tests.skip=true'
             	//sh 'mvn -f bookstore_app -Pintegration clean test -DskipUTs'
             }
         }

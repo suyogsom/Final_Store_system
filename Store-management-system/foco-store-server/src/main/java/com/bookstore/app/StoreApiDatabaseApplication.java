@@ -14,7 +14,7 @@ public class StoreApiDatabaseApplication  {
 	
 	public static void main(String[] args) { 
 		SpringApplication.run(StoreApiDatabaseApplication.class, args); 
-		System.out.println("Application Started");
+		System.out.println("\n\nApplication Started\n\n");
 		
 		LOGGER.error("Messages logged at ERROR level");
 		LOGGER.warn("Messages logged at WARN level");

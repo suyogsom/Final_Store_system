@@ -5,24 +5,20 @@ pipeline {
             steps {
             	echo 'Building app...'
                 sh 'mvn -U -f Store-management-system clean install -Dintegration-tests.skip=true'
-                //sh 'mvn -f bookstore_app -Pbuild clean install  -Dskip.it=true'
             }
         }
         
         stage('deploy app') {
             steps {
             	echo 'Deploying app...'            	
-			    // start the application
 				sh 'ls -l Store-management-system/foco-store-integration/target/classes/foco-store-server-0.0.1-SNAPSHOT.jar'
-                sh 'nohup java -jar Store-management-system/foco-store-integration/target/classes/*.jar &'			   
-                //sh 'cat nohup.out'                            
+                sh 'nohup java -jar Store-management-system/foco-store-integration/target/classes/*.jar &'			                               
             }
         }
         
         stage('run integration tests') {
             steps {
             	echo 'Running integration tests...'
-                //sh 'mvn -f Store-management-system test -Dunit-tests.skip=true'
             	sh 'mvn -f Store-management-system -Pintegration clean verify -DskipUTs'
             }
         }

@@ -68,13 +68,13 @@ public class TextBooksControllerTest {
     @Disabled
     public void getTextBookById() {
         List<TextBooks> list = new ArrayList<TextBooks>();
-       TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
+        TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
         
         list.add(book1);
         
-    	when(textBooksController.getTextbook(101)).thenReturn(book1);
+    	when(textBooksService.getTextbook(101)).thenReturn(book1);
     	
-    	TextBooks book = textBooksService.getTextbook(101);
+    	TextBooks book = textBooksController.getTextbook(101);
     	
     	assertEquals("101", book.getId());
 	  }
@@ -82,62 +82,57 @@ public class TextBooksControllerTest {
     @Test
     @DisplayName("Adding a textbook")
     public void addTextBook() {
-       TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
+        TextBooks book = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
         
-        textBooksController.addTextbook(book1);
-
-        verify(textBooksService,times(1)).addTextbook(book1);
+        //Mockito.doThrow(new RuntimeException()).doNothing().when(textBooksService).addTextbook(book);        
+        
+		//when(textBooksService.getTextbook(101)).thenReturn(book);
+        
+        textBooksService.addTextbook(book);
+        
+        verify(textBooksService,times(1)).addTextbook(book);
+        
+        //TextBooks bookAdded = textBooksController.getTextbook(101);
+        
+        //assertEquals("CIS", textBooksService.getTextbook(101).getDepartment());
       }
     
-//    @Test
-//    @DisplayName("Update a textbook")
-//    public void updateTextBook() {
-//       TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
-//        
-//        textBooksController.addTextbook(book1);
-//
-//        verify(textBooksService,times(1)).addTextbook(book1);
-//      }
+    @Test
+    @DisplayName("Update a textbook")
+    public void updateTextBook() {
+    	TextBooks book = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
+        
+        textBooksController.addTextbook(book);
+
+        verify(textBooksService,times(1)).addTextbook(book);
+        
+        assertEquals("CIS", book.getDepartment());
     
-//    @Test
-//    @DisplayName("Delete a textbook")
-//    public void deleteTextBook() {
-//    	List<TextBooks> list = new ArrayList<TextBooks>();
-//        TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
-//        TextBooks book2 = new TextBooks(102,"CIVIL","java EE","thid is java EE" ,"2002",4523.3);
-//        TextBooks book3 = new TextBooks(103,"MCIS","java SE","thid is java SE","2003",452334.3);
-//         
-//        list.add(book1);
-//        list.add(book2);
-//        list.add(book3);
-//         
-//        when(textBooksService.getAllTextbooks()).thenReturn(list);
-//         
-//        List<TextBooks> textBooksList = (List<TextBooks>) textBooksController.getAllTextbooks();
-//         
-//        assertEquals(3, textBooksList.size());
-//        
-//        
-//
-//     }
+        TextBooks book1Update = new TextBooks(101,"CIS-update","java","thid is java","2001",45.3);
+                
+        textBooksController.updateTextbook(book1Update, book.getId());
+
+        verify(textBooksService,times(1)).updateTextbook(book1Update, book.getId());
+        
+        //assertEquals("CIS-update", book1Update.getDepartment());
+      }
     
-    
-	     
-	/*
-	 * @Test public void getEmployeeByIdTest() {
-	 * when(dao.getEmployeeById(1)).thenReturn(new
-	 * EmployeeVO(1,"Lokesh","Gupta","user@email.com"));
-	 * 
-	 * EmployeeVO emp = manager.getEmployeeById(1);
-	 * 
-	 * assertEquals("Lokesh", emp.getFirstName()); assertEquals("Gupta",
-	 * emp.getLastName()); assertEquals("user@email.com", emp.getEmail()); }
-	 * 
-	 * @Test public void createEmployeeTest() { EmployeeVO emp = new
-	 * EmployeeVO(1,"Lokesh","Gupta","user@email.com");
-	 * 
-	 * manager.addEmployee(emp);
-	 * 
-	 * verify(dao, times(1)).addEmployee(emp); }
-	 */
+    @Test
+    @DisplayName("Delete a textbook")
+    public void deleteTextBook() {
+    	List<TextBooks> list = new ArrayList<TextBooks>();
+        TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
+        TextBooks book2 = new TextBooks(102,"CIVIL","java EE","thid is java EE" ,"2002",4523.3);
+        TextBooks book3 = new TextBooks(103,"MCIS","java SE","thid is java SE","2003",452334.3);
+         
+        list.add(book1);
+        list.add(book2);
+        list.add(book3);
+        
+        textBooksController.deleteTextbook(book2.getId());
+         
+        verify(textBooksService,times(1)).deleteTextbook(book2.getId());
+         
+       //assertEquals(2, list.size());
+    }
 }

@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.app.models.TextBooks;
-import com.bookstore.app.services.TextBooksServiceCRUDRepo;
+import com.bookstore.app.services.TextBooksService;
 
 @RestController
 public class TextBooksController {
 	
 	@Autowired
-	private TextBooksServiceCRUDRepo textBooksService;
+	private TextBooksService textBooksService;
 	
 	@GetMapping(value="/books/textbooks",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"})
 	public Iterable<TextBooks> getAllTextbooks(){	

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.bookstore.app.models.TextBooks;
 
 @Repository
-public interface TextBooksCRUDRepo extends JpaRepository<TextBooks, Integer>{ 
+public interface TextBooksRepo extends JpaRepository<TextBooks, Integer>{ 
 
 }
 

@@ -20,7 +20,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.bookstore.app.controllers.TextBooksController;
 import com.bookstore.app.models.TextBooks;
-import com.bookstore.app.services.TextBooksServiceCRUDRepo;
+import com.bookstore.app.services.TextBooksService;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,7 +30,7 @@ public class TextBooksControllerTest {
     TextBooksController textBooksController;
      
     @Mock
-    TextBooksServiceCRUDRepo textBooksService;
+    TextBooksService textBooksService;
  
     @BeforeEach
     public void init() {

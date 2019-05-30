@@ -4,40 +4,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bookstore.app.models.TextBooks;
-import com.bookstore.app.repositories.TextBooksCRUDRepo;
+import com.bookstore.app.repositories.TextBooksRepo;
 
 @Service
-public class TextBooksServiceCRUDRepo {
+public class TextBooksService {
 
 	@Autowired
-	private TextBooksCRUDRepo textBooksCRUDRepo;
+	private TextBooksRepo textBooksRepo;
 	
 
 	public Iterable<TextBooks> getAllTextbooks(){
-		return textBooksCRUDRepo.findAll();
+		return textBooksRepo.findAll();
 	}
 
 	public TextBooks getTextbook(Integer id){ 
-		return textBooksCRUDRepo.findById(id).get();
+		return textBooksRepo.findById(id).get();
 		
 	}
 
 	public void addTextbook(TextBooks textBook){	
-		textBooksCRUDRepo.save(textBook);
+		textBooksRepo.save(textBook);
 	}
 
 	public void updateTextbook(TextBooks textBook, Integer id) {
-		for(int i=0;i<textBooksCRUDRepo.count();i++) {
-			TextBooks textBookUpdate = textBooksCRUDRepo.findById(id).get();
+		for(int i=0;i<textBooksRepo.count();i++) {
+			TextBooks textBookUpdate = textBooksRepo.findById(id).get();
 			if(textBookUpdate.getId().equals(id)) {
 				textBookUpdate = textBook;
-				textBooksCRUDRepo.save(textBookUpdate);
+				textBooksRepo.save(textBookUpdate);
 				return;
 			}
 		}	
 	}
 
 	public void deleteTextbook(Integer id){	
-		textBooksCRUDRepo.deleteById(id);  
+		textBooksRepo.deleteById(id);  
 	}
 }

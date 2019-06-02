@@ -2,13 +2,10 @@ package com.bookstore.app.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import javax.validation.constraints.Size;
 
 
 @Entity
@@ -54,6 +51,7 @@ public class TextBooks{
 	}
 	
 	@Column(name = "name")
+	@Size(max = 50)
 	public String getName() {
 		return name;
 	}
@@ -63,6 +61,7 @@ public class TextBooks{
 	}
 	
 	@Column(name = "deacription")
+	@Size(max = 50)
 	public String getDescription() {
 		return description;
 	}
@@ -81,6 +80,7 @@ public class TextBooks{
 	}
 	
 	@Column(name = "department")
+	@Size(max = 50)
 	public String getDepartment() {
 		return department;
 	}

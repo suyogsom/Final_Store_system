@@ -5,33 +5,40 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.app.models.User;
-import com.bookstore.app.repositories.UserRepository;
+import com.bookstore.app.models.UserInfo;
+import com.bookstore.app.repositories.UserRepo;
 
 @Service
 public class UserService {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepo userRepo;
 
-	public List<User> getAllUsers(){		
-		return userRepository.getAllUsers();		
+	public List<UserInfo> getAllUsers(){		
+		return userRepo.findAll();		
 	}
 
-	public List<User> getUser(String id){ 
-		return userRepository.findByName(id);  
+	public UserInfo getUser(Integer userId){ 
+		return userRepo.findById(userId).get();
 	}
 
-	public void addUser(User user){	
-		userRepository.addUser( user);
+	public void addUser(UserInfo userInfo){	
+		userRepo.save(userInfo);
 	}
 
-	public void updateUser(User user, String id) {	
-		userRepository.updateUser(user,id);	
+	public void updateUser(UserInfo userInfo, Integer id) {	
+		for(int i=0;i<userRepo.count();i++) {
+			UserInfo userInfoUpdate = userRepo.findById(id).get();
+			if(userInfoUpdate.getUserId().equals(id)) {
+				userInfoUpdate = userInfo;
+				userRepo.save(userInfoUpdate);
+				return;
+			}
+		}	
 	}
 
-	public void deleteUser(String id){	
-		userRepository.deleteById(id);	   
+	public void deleteUser(Integer id){	
+		userRepo.deleteById(id);	   
 	}
 
 }

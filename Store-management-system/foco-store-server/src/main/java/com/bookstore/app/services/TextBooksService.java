@@ -29,7 +29,7 @@ public class TextBooksService {
 	public void updateTextbook(TextBooks textBook, Integer id) {
 		for(int i=0;i<textBooksRepo.count();i++) {
 			TextBooks textBookUpdate = textBooksRepo.findById(id).get();
-			if(textBookUpdate.getId().equals(id)) {
+			if(textBookUpdate.getTextBookId().equals(id)) {
 				textBookUpdate = textBook;
 				textBooksRepo.save(textBookUpdate);
 				return;

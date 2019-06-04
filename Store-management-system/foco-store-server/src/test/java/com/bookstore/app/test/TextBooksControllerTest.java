@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -56,7 +55,7 @@ public class TextBooksControllerTest {
         assertEquals(3, textBooksList.size());
 
         for(int i=0;i<textBooksList.size();i++) {
-        	System.out.print("\nid:" + textBooksList.get(i).getId());
+        	System.out.print("\nid:" + textBooksList.get(i).getTextBookId());
         	System.out.print("\t\tname:" + textBooksList.get(i).getName());
         	System.out.print("\t\tdepartment:" + textBooksList.get(i).getDepartment());
         	System.out.print("\t\tdescription:" + textBooksList.get(i).getDescription());
@@ -65,7 +64,6 @@ public class TextBooksControllerTest {
     
     @Test
     @DisplayName("Getting a textbook with ID")
-    @Disabled
     public void getTextBookById() {
         List<TextBooks> list = new ArrayList<TextBooks>();
         TextBooks book1 = new TextBooks(101,"CIS","java","thid is java","2001",45.3);
@@ -76,7 +74,7 @@ public class TextBooksControllerTest {
     	
     	TextBooks book = textBooksController.getTextbook(101);
     	
-    	assertEquals("101", book.getId());
+    	assertEquals("101", book.getTextBookId().toString());
 	  }
     
     @Test
@@ -111,9 +109,9 @@ public class TextBooksControllerTest {
     
         TextBooks book1Update = new TextBooks(101,"CIS-update","java","thid is java","2001",45.3);
                 
-        textBooksController.updateTextbook(book1Update, book.getId());
+        textBooksController.updateTextbook(book1Update, book.getTextBookId());
 
-        verify(textBooksService,times(1)).updateTextbook(book1Update, book.getId());
+        verify(textBooksService,times(1)).updateTextbook(book1Update, book.getTextBookId());
         
         //assertEquals("CIS-update", book1Update.getDepartment());
       }
@@ -130,9 +128,9 @@ public class TextBooksControllerTest {
         list.add(book2);
         list.add(book3);
         
-        textBooksController.deleteTextbook(book2.getId());
+        textBooksController.deleteTextbook(book2.getTextBookId());
          
-        verify(textBooksService,times(1)).deleteTextbook(book2.getId());
+        verify(textBooksService,times(1)).deleteTextbook(book2.getTextBookId());
          
        //assertEquals(2, list.size());
     }

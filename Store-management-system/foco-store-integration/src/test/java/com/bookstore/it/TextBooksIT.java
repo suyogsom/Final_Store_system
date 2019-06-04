@@ -40,9 +40,9 @@ public class TextBooksIT extends BaseTest {
 	}
 	
 	@Test
-	@DisplayName("Adding a textbook")
-	public void addTextBook() {		
-		String body = "{ \"department\": \"CS-2\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4}";
+	@DisplayName("Adding a textbook with out user")
+	public void addTextBookNoUser() {		
+		String body = "{ \"department\": \"ECE\", \"name\": \"Java intsdfsfro\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
 		response = given().spec(restClient.getRecSpec())
 				   .basePath("/books").body(body)
@@ -72,12 +72,54 @@ public class TextBooksIT extends BaseTest {
 		js = new JsonPath(response.asString());
 		String department = js.get("department");
 
-		assertThat(department,containsString("CS-2"));
+		assertThat(department,containsString("ECE"));
 	}
 	
 	@Test
-	@DisplayName("Updating a textbook")
-	public void updateTextBook() {				
+	@DisplayName("Updating a textbook with out user")
+	public void updateTextBookNoUser() {				
+		String body = "{ \"department\": \"CS-23 update trial\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
+		
+		response = given().spec(restClient.getRecSpec())
+				   .basePath("/books").body(body)
+				   .when().post("/textbooks/add");
+		
+		Response postResponse = given().spec(restClient.getRecSpec())
+				   				.basePath("/books")
+				   				.get("/textbooks/")
+				   				.then().assertThat().statusCode(200).extract().response();
+		
+		List<Integer> idList = postResponse.jsonPath().getList("id");
+		
+		Integer idToUpdate = 0;
+		
+		for(Integer id : idList) {
+			idToUpdate = id;			
+		}
+		
+		System.out.print("\n\nID to update is : "+idToUpdate+"\n\n");		
+		
+		String bodyUpdate = "{ \"department\": \"CS-23-01 update done\", \"name\": \"Java update\", \"description\": \"this is java book update\", \"isbn\": \"23123\", \"unitPrice\": 231123.3, \"id\":" + idToUpdate + " }";
+		
+		response = given().spec(restClient.getRecSpec())
+				   .basePath("/books").body(bodyUpdate)
+				   .when().post("/textbooks/update/"+ idToUpdate);		
+		
+		Response postResponseUpdate = given().spec(restClient.getRecSpec())
+				   					  .basePath("/books")
+				   					  .get("/textbooks/" + idToUpdate);
+		
+		System.out.print("\nAfter update" + postResponseUpdate.asString());
+		
+		js = new JsonPath(postResponseUpdate.asString());
+		String department = js.get("department");
+
+		assertThat(department,containsString("CS-23-01 update done"));
+	}
+	
+	@Test
+	@DisplayName("Updating a textbook with user")
+	public void updateTextBookWithUser() {				
 		String body = "{ \"department\": \"CS-23 update trial\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
 		response = given().spec(restClient.getRecSpec())

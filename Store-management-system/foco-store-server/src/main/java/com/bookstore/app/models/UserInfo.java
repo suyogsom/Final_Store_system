@@ -10,9 +10,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name="User")
-public class UserInfo{
-	 
+@Table(name="USERINFO")
+public class UserInfo {
+
 	private Integer userId;
 	private String department,name,address,phoneNumber,email;	
 
@@ -36,6 +36,7 @@ public class UserInfo{
 	}	
 
 	@Id
+	@Column(name = "userId")
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	public Integer getUserId() {
 		return userId;
@@ -97,5 +98,32 @@ public class UserInfo{
 
 	public void setEmail(String email) {
 		this.email = email;
-	}		
+	}	
+	
+//	this is for bi directional one to many and many to one
+	
+//	private List<TextBooks> booksList = new ArrayList<TextBooks>();
+	
+//	public UserInfo(List<TextBooks> textBooksList,Integer id, String department, String name, String address, String phoneNumber, String email) {		
+//		super(); 
+//		this.userId = id;  
+//		this.department=department;  
+//		this.name = name;
+//		this.address = address; 
+//		this.phoneNumber =phoneNumber;	
+//		this.email = email;
+//		this.booksList = textBooksList;
+//	}
+	
+	
+	
+//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//	@ElementCollection
+//	public List<TextBooks> getTextBooks() {
+//		return booksList;
+//	}
+//
+//	public void setTextBooks(List<TextBooks> textBooks) {
+//		this.booksList = textBooks;
+//	}	
 }

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -41,6 +42,7 @@ public class TextBooksIT extends BaseTest {
 	
 	@Test
 	@DisplayName("Adding a textbook with out user")
+	@Disabled
 	public void addTextBookNoUser() {		
 		String body = "{ \"department\": \"ECE\", \"name\": \"Java intsdfsfro\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
@@ -77,6 +79,7 @@ public class TextBooksIT extends BaseTest {
 	
 	@Test
 	@DisplayName("Updating a textbook with out user")
+	@Disabled
 	public void updateTextBookNoUser() {				
 		String body = "{ \"department\": \"CS-23 update trial\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		
@@ -119,6 +122,7 @@ public class TextBooksIT extends BaseTest {
 	
 	@Test
 	@DisplayName("Updating a textbook with user")
+	@Disabled
 	public void updateTextBookWithUser() {				
 		String body = "{ \"department\": \"CS-23 update trial\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		

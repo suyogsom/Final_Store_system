@@ -1,5 +1,7 @@
 package com.bookstore.app.services;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class TextBooksService {
 		return textBooksRepo.findAll();
 	}
 
-	public TextBooks getTextbook(Integer id){ 
+	public TextBooks getTextbook(UUID id){ 
 		return textBooksRepo.findById(id).get();
 		
 	}
@@ -26,7 +28,7 @@ public class TextBooksService {
 		textBooksRepo.save(textBook);
 	}
 
-	public void updateTextbook(TextBooks textBook, Integer id) {
+	public void updateTextbook(TextBooks textBook, UUID id) {
 		for(int i=0;i<textBooksRepo.count();i++) {
 			TextBooks textBookUpdate = textBooksRepo.findById(id).get();
 			if(textBookUpdate.getTextBookId().equals(id)) {
@@ -37,7 +39,7 @@ public class TextBooksService {
 		}	
 	}
 
-	public void deleteTextbook(Integer id){	
+	public void deleteTextbook(UUID id){	
 		textBooksRepo.deleteById(id);  
 	}
 }

@@ -1,5 +1,7 @@
 package com.bookstore.app.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +25,7 @@ public class TextBooksController {
 	
 
 	@GetMapping(value="/books/textbooks/{textId}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"})  
-	public TextBooks getTextbook(@PathVariable Integer textId)  {	
+	public TextBooks getTextbook(@PathVariable UUID textId)  {	
 		return textBooksService.getTextbook(textId);	
 	}
 
@@ -33,12 +35,12 @@ public class TextBooksController {
 	}
 
 	@PostMapping(value="/books/textbooks/update/{id}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"}) 
-	public void updateTextbook(@RequestBody TextBooks textbook, @PathVariable Integer id)  {	
+	public void updateTextbook(@RequestBody TextBooks textbook, @PathVariable UUID id)  {	
 		textBooksService.updateTextbook(textbook, id);  
 	}
 
 	@PostMapping(value="/books/textbooks/delete/{id}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"}) 
-	public void deleteTextbook( @PathVariable Integer id)  {   
+	public void deleteTextbook( @PathVariable UUID id)  {   
 		textBooksService.deleteTextbook(id);	
 	}									
 }

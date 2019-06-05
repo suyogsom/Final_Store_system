@@ -1,6 +1,7 @@
 package com.bookstore.app.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +25,7 @@ public class UserController {
 	}	
 
 	@GetMapping(value="/user/allUsers/{userId}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"})  
-	public UserInfo getUser(@PathVariable Integer userId)  {	
+	public UserInfo getUser(@PathVariable UUID userId)  {	
 		return userService.getUser(userId);	
 	}
 
@@ -34,12 +35,12 @@ public class UserController {
 	}
 
 	@PostMapping(value="/user/update/{id}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"}) 
-	public void updateTextbook(@RequestBody UserInfo userInfo, @PathVariable Integer id)  {	
+	public void updateTextbook(@RequestBody UserInfo userInfo, @PathVariable UUID id)  {	
 		userService.updateUser(userInfo, id);  
 	}
 
 	@PostMapping(value="/user/delete/{id}",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"}) 
-	public void deleteTextbook( @PathVariable Integer id)  {   
+	public void deleteTextbook( @PathVariable UUID id)  {   
 		userService.deleteUser(id);	
 	}				
 }

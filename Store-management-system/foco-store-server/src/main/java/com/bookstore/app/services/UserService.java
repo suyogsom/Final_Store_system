@@ -1,6 +1,7 @@
 package com.bookstore.app.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class UserService {
 		return userRepo.findAll();		
 	}
 
-	public UserInfo getUser(Integer userId){ 
+	public UserInfo getUser(UUID userId){ 
 		return userRepo.findById(userId).get();
 	}
 
@@ -26,7 +27,7 @@ public class UserService {
 		userRepo.save(userInfo);
 	}
 
-	public void updateUser(UserInfo userInfo, Integer id) {	
+	public void updateUser(UserInfo userInfo, UUID id) {	
 		for(int i=0;i<userRepo.count();i++) {
 			UserInfo userInfoUpdate = userRepo.findById(id).get();
 			if(userInfoUpdate.getUserId().equals(id)) {
@@ -37,8 +38,8 @@ public class UserService {
 		}	
 	}
 
-	public void deleteUser(Integer id){	
-		userRepo.deleteById(id);	   
+	public void deleteUser(UUID id){	
+		userRepo.deleteById(id);
 	}
 
 }

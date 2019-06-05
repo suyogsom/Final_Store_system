@@ -31,6 +31,7 @@ public class TextBooksIT extends BaseTest {
 	
 	@Test
 	@DisplayName("Getting a textbook with ID")
+	@Disabled
 	public void getTextBookByName() {
 		response = given().spec(restClient.getRecSpec())
 				   .basePath("/books")
@@ -165,6 +166,7 @@ public class TextBooksIT extends BaseTest {
 	
 	@Test
 	@DisplayName("Deleting a textbook")
+	@Disabled
 	public void deleteTextBook() {
 		String body = "{ \"department\": \"CS-23\", \"name\": \"Java trial\", \"description\": \"this is java book\", \"isbn\": \"23134\", \"unitPrice\": 223.4 }";
 		

@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
@@ -11,17 +12,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.bookstore.app.Audit.Auditable;
 import com.bookstore.app.models.interfaces.UserGender;
 import com.bookstore.app.models.interfaces.UserStatus;
 
 @Entity
 @Table(name="USERINFO")
-public class UserInfo {
+@EntityListeners(AuditingEntityListener.class)
+public class UserInfo extends Auditable<String> {
 
 	private UUID userId;
 	private String department,name,address,phoneNumber,email;
@@ -53,7 +57,8 @@ public class UserInfo {
 	}	
 
 	@Id
-	@Column(name = "userId",updatable = false, nullable = false, columnDefinition = "BINARY(16)" )   
+	@Column(name = "userId",updatable = false, nullable = false)
+	@Type(type="uuid-char")
 	@GeneratedValue(generator = "uuid2",strategy = GenerationType.AUTO)
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
 	public UUID getUserId() {
@@ -67,9 +72,8 @@ public class UserInfo {
 	public UserInfo() {
 	}	
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	@Size(max = 50)
-	@NotNull
 	public String getName() {
 		return name;
 	}
@@ -78,9 +82,8 @@ public class UserInfo {
 		this.name = name;
 	}			
 	
-	@Column(name = "department")
+	@Column(name = "department", nullable = false)
 	@Size(max = 50)
-	@NotNull
 	public String getDepartment() {
 		return department;
 	}
@@ -89,9 +92,8 @@ public class UserInfo {
 		this.department = department;
 	}
 
-	@Column(name = "address")
+	@Column(name = "address", nullable = false)
 	@Size(max = 50)
-	@NotNull
 	public String getAddress() {
 		return address;
 	}
@@ -101,8 +103,8 @@ public class UserInfo {
 		this.address = address;
 	}
 
-	@Column(name = "phoneNumber")
-	@NotNull
+	@Column(name = "phoneNumber", nullable = false)
+	@Size(max = 50)
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -112,9 +114,8 @@ public class UserInfo {
 	}
 
 	@Email
-	@Column(name = "email",unique=true)
-	@Size(max = 100)
-	@NotNull
+	@Column(name = "email",unique=true, nullable = false)
+	@Size(max = 50)
 	public String getEmail() {
 		return email;
 	}
@@ -124,8 +125,7 @@ public class UserInfo {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="gender")
-	@NotNull
+	@Column(name="gender", nullable = false)
 	public UserGender getGender() {
 		return gender;
 	}
@@ -135,8 +135,7 @@ public class UserInfo {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="status")
-	@NotNull
+	@Column(name="status", nullable = false)
 	public UserStatus getStatus() {
 		return status;
 	}
@@ -144,6 +143,13 @@ public class UserInfo {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
+
+	
+	// @Size(min = 1, max = 40)
+	// @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
+	// @Digits(fraction = 0, integer = 12) , for phone number 
+	// @Setter(AccessLevel.PUBLIC)
+	// @Getter(AccessLevel.PUBLIC)
 	
 		
 //	this is for bi directional one to many and many to one

@@ -1,5 +1,6 @@
 package com.bookstore.app.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class TextBooksService {
 	private TextBooksRepo textBooksRepo;
 	
 
-	public Iterable<TextBooks> getAllTextbooks(){
+	public List<TextBooks> getAllTextbooks(){
 		return textBooksRepo.findAll();
 	}
 
@@ -29,14 +30,10 @@ public class TextBooksService {
 	}
 
 	public void updateTextbook(TextBooks textBook, UUID id) {
-		for(int i=0;i<textBooksRepo.count();i++) {
-			TextBooks textBookUpdate = textBooksRepo.findById(id).get();
-			if(textBookUpdate.getTextBookId().equals(id)) {
-				textBookUpdate = textBook;
-				textBooksRepo.save(textBookUpdate);
-				return;
-			}
-		}	
+		TextBooks textToUpdate = textBooksRepo.findById(id).get();
+		textToUpdate = textBook;
+		textBooksRepo.save(textToUpdate);
+		return;
 	}
 
 	public void deleteTextbook(UUID id){	

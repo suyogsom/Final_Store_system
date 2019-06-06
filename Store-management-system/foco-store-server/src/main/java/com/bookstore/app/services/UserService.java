@@ -28,14 +28,10 @@ public class UserService {
 	}
 
 	public void updateUser(UserInfo userInfo, UUID id) {	
-		for(int i=0;i<userRepo.count();i++) {
-			UserInfo userInfoUpdate = userRepo.findById(id).get();
-			if(userInfoUpdate.getUserId().equals(id)) {
-				userInfoUpdate = userInfo;
-				userRepo.save(userInfoUpdate);
-				return;
-			}
-		}	
+		UserInfo userToupdate = userRepo.findById(id).get();
+		userToupdate = userInfo;
+		userRepo.save(userToupdate);
+		return;
 	}
 
 	public void deleteUser(UUID id){	

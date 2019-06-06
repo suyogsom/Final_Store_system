@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication 
 public class StoreApiDatabaseApplication  {	
 	
-	
 	private static final Logger LOGGER = LoggerFactory.getLogger(StoreApiDatabaseApplication.class);
 	
 	public static void main(String[] args) { 
@@ -19,5 +18,7 @@ public class StoreApiDatabaseApplication  {
 		LOGGER.warn("Messages logged at WARN level");
 		LOGGER.info("Messages logged at INFO level");
 		LOGGER.debug("Messages logged at DEBUG level");
+		
+		
 	}
 }

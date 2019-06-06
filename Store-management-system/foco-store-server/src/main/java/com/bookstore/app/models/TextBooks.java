@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -14,17 +15,20 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.bookstore.app.Audit.Auditable;
 import com.bookstore.app.models.interfaces.TextBooksDepartments;
 
 
 @Entity
 @Table(name="TEXTBOOKS")
-public class TextBooks{
+@EntityListeners(AuditingEntityListener.class)
+public class TextBooks extends Auditable<String> {
 	
 	private UserInfo user;
 	private UUID textBookId;
@@ -77,10 +81,11 @@ public class TextBooks{
 	
 	/**
 	 *  to generate id automatically  @GeneratedValue(strategy=GenerationType.SEQUENCE) 
-	 *  column definition is to convert UUID to binary
+	 *  @Type(type="uuid-char") convert UUID to char string 
 	 */
 	@Id
-	@Column(name = "textBookId",updatable = false, nullable = false,columnDefinition = "BINARY(16)" )    
+	@Column(name = "textBookId",updatable = false, nullable = false) 
+	@Type(type="uuid-char")
 	@GeneratedValue(generator = "uuid2",strategy = GenerationType.AUTO)
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
 	public UUID getTextBookId() {
@@ -91,9 +96,8 @@ public class TextBooks{
 		this.textBookId = textBookId;
 	}
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	@Size(max = 50)
-	@NotNull
 	public String getName() {
 		return name;
 	}
@@ -102,9 +106,8 @@ public class TextBooks{
 		this.name = name;
 	}
 	
-	@Column(name = "deacription")
+	@Column(name = "deacription", nullable = false)
 	@Size(max = 50)
-	@NotNull
 	public String getDescription() {
 		return description;
 	}
@@ -116,8 +119,8 @@ public class TextBooks{
 	/**
 	 *  unique is to create unique record in database, no repetition
 	 */
-	@Column(name = "isbn",unique=true)
-	@NotNull
+	@Column(name = "isbn",unique=true, nullable = false)
+	@Size(max = 50)
 	public String getIsbn() {
 		return isbn;
 	}
@@ -127,8 +130,7 @@ public class TextBooks{
 	}
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name="department")
-	@NotNull
+	@Column(name="department", nullable = false)
 	public TextBooksDepartments getDepartment() {
 		return department;
 	}
@@ -137,8 +139,7 @@ public class TextBooks{
 		this.department = department;
 	}
 
-	@Column(name = "UnitePrice")
-	@NotNull
+	@Column(name = "UnitePrice", nullable = false)
 	public Double getUnitPrice() {
 		return unitPrice;
 	}
@@ -148,12 +149,12 @@ public class TextBooks{
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="userIdFK")
+	@JoinColumn(name="userIdFK", nullable = false)
 	public UserInfo getUser() {
 		return user;
 	}
 
 	public void setUser(UserInfo user) {
 		this.user = user;
-	}	
+	}
 }

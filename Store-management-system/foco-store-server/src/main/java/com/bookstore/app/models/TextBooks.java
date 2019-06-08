@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -96,7 +97,8 @@ public class TextBooks extends Auditable<String> {
 		this.textBookId = textBookId;
 	}
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name")
+	@NotBlank(message = "name must not be empty")
 	@Size(max = 50)
 	public String getName() {
 		return name;
@@ -106,7 +108,8 @@ public class TextBooks extends Auditable<String> {
 		this.name = name;
 	}
 	
-	@Column(name = "deacription", nullable = false)
+	@Column(name = "deacription")
+	@NotBlank(message = "description must not be empty")
 	@Size(max = 50)
 	public String getDescription() {
 		return description;
@@ -119,7 +122,8 @@ public class TextBooks extends Auditable<String> {
 	/**
 	 *  unique is to create unique record in database, no repetition
 	 */
-	@Column(name = "isbn",unique=true, nullable = false)
+	@Column(name = "isbn",unique=true)
+	@NotBlank(message = "isbn must not be empty")
 	@Size(max = 50)
 	public String getIsbn() {
 		return isbn;
@@ -149,7 +153,7 @@ public class TextBooks extends Auditable<String> {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="userIdFK", nullable = false)
+	@JoinColumn(name="userIdFK")
 	public UserInfo getUser() {
 		return user;
 	}

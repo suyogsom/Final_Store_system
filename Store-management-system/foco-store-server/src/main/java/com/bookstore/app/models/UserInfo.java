@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -72,7 +73,8 @@ public class UserInfo extends Auditable<String> {
 	public UserInfo() {
 	}	
 	
-	@Column(name = "name", nullable = false)
+	@Column(name = "name")
+	@NotBlank(message = "name must not be empty")
 	@Size(max = 50)
 	public String getName() {
 		return name;
@@ -82,7 +84,8 @@ public class UserInfo extends Auditable<String> {
 		this.name = name;
 	}			
 	
-	@Column(name = "department", nullable = false)
+	@Column(name = "department")
+	@NotBlank(message = "department must not be empty")
 	@Size(max = 50)
 	public String getDepartment() {
 		return department;
@@ -92,7 +95,8 @@ public class UserInfo extends Auditable<String> {
 		this.department = department;
 	}
 
-	@Column(name = "address", nullable = false)
+	@Column(name = "address")
+	@NotBlank(message = "address must not be empty")
 	@Size(max = 50)
 	public String getAddress() {
 		return address;
@@ -103,7 +107,8 @@ public class UserInfo extends Auditable<String> {
 		this.address = address;
 	}
 
-	@Column(name = "phoneNumber", nullable = false)
+	@Column(name = "phoneNumber")
+	@NotBlank(message = "phone number must not be empty")
 	@Size(max = 50)
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -113,9 +118,11 @@ public class UserInfo extends Auditable<String> {
 		this.phoneNumber = phoneNumber;
 	}
 
-	@Email
-	@Column(name = "email",unique=true, nullable = false)
+	@Email(message = "email should be a valid email")
+	@NotBlank(message = "email must not be empty")
+	@Column(name = "email",unique=true)
 	@Size(max = 50)
+	
 	public String getEmail() {
 		return email;
 	}
@@ -125,7 +132,7 @@ public class UserInfo extends Auditable<String> {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="gender", nullable = false)
+	@Column(name="gender")
 	public UserGender getGender() {
 		return gender;
 	}
@@ -135,7 +142,7 @@ public class UserInfo extends Auditable<String> {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@Column(name="status", nullable = false)
+	@Column(name="status")
 	public UserStatus getStatus() {
 		return status;
 	}
@@ -150,6 +157,7 @@ public class UserInfo extends Auditable<String> {
 	// @Digits(fraction = 0, integer = 12) , for phone number 
 	// @Setter(AccessLevel.PUBLIC)
 	// @Getter(AccessLevel.PUBLIC)
+	// @NotEmpty(message = "first name must not be empty")
 	
 		
 //	this is for bi directional one to many and many to one

@@ -8,15 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.app.ExceptionHandling.TextBooksNotFoundException;
+import com.bookstore.app.exceptionHandling.TextBooksNotFoundException;
 import com.bookstore.app.models.UserInfo;
-import com.bookstore.app.repositories.UserRepo;
+import com.bookstore.app.repositories.UserInfoRepo;
 
 @Service
-public class UserService {
+public class UserInfoService {
 	
 	@Autowired
-	private UserRepo userRepo;
+	private UserInfoRepo userRepo;
 
 	public List<UserInfo> getAllUsers(){		
 		return userRepo.findAll();		
@@ -32,6 +32,11 @@ public class UserService {
 	}
 
 	public ResponseEntity<UserInfo> addUser(UserInfo userInfo){	
+		
+		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null||userInfo.getStatus()==null) {
+			throw new TextBooksNotFoundException();
+		}
+		
 		userRepo.save(userInfo);
 		return new ResponseEntity<>(userInfo, HttpStatus.OK);
 	}

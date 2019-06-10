@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.app.ExceptionHandling.TextBooksNotFoundException;
+import com.bookstore.app.exceptionHandling.TextBooksNotFoundException;
 import com.bookstore.app.models.TextBooks;
 import com.bookstore.app.repositories.TextBooksRepo;
 
@@ -17,7 +17,7 @@ public class TextBooksService {
 
 	@Autowired
 	private TextBooksRepo textBooksRepo;
-
+	
 	public List<TextBooks> getAllTextbooks(){
 		return textBooksRepo.findAll();
 	}

@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.bookstore.app.models.TextBooks;
 
 @Repository
-public interface TextBooksRepo extends JpaRepository<TextBooks, UUID>{ 
+public interface TextBooksRepo extends JpaRepository<TextBooks, UUID>{
 
 }
-
-

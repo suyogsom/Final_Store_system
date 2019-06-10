@@ -19,7 +19,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import com.bookstore.app.Audit.Auditable;
+import com.bookstore.app.audit.Auditable;
 import com.bookstore.app.models.interfaces.UserGender;
 import com.bookstore.app.models.interfaces.UserStatus;
 

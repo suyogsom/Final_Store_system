@@ -1,4 +1,4 @@
-package com.bookstore.app.ExceptionHandling;
+package com.bookstore.app.models;
 
 import java.time.LocalDateTime;
 

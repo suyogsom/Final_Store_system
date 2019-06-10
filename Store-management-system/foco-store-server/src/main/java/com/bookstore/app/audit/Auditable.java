@@ -1,4 +1,4 @@
-package com.bookstore.app.Audit;
+package com.bookstore.app.audit;
 
 import java.time.LocalDateTime;
 

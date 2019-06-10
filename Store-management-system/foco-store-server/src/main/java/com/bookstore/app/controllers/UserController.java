@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bookstore.app.models.UserInfo;
-import com.bookstore.app.services.UserService;
+import com.bookstore.app.services.UserInfoService;
 
 @RestController
 @RequestMapping(value="/user",consumes = {"application/json", "application/xml"},produces = {"application/json", "application/xml"})
 public class UserController {
 	
 	@Autowired
-	private UserService userService;
+	private UserInfoService userInfoService;
 	
 	@GetMapping(value="/allUsers")
 	public List<UserInfo> getAllUsers(){	
-		return userService.getAllUsers();
+		return userInfoService.getAllUsers();
 	}	
 
 	@GetMapping(value="/{userId}")  
 	public ResponseEntity<UserInfo> getUser(@PathVariable UUID userId)  {	
-		return userService.getUser(userId);	
+		return userInfoService.getUser(userId);	
 	}
 
 	@PostMapping(value="/add") 
 	public ResponseEntity<UserInfo> addUser(@RequestBody UserInfo userInfo)  {	
-		return userService.addUser(userInfo);   
+		return userInfoService.addUser(userInfo);   
 	}
 
 	@PostMapping(value="/update/{id}") 
 	public ResponseEntity<UserInfo> updateTextbook(@RequestBody UserInfo userInfo, @PathVariable UUID id)  {	
-		return userService.updateUser(userInfo, id);  
+		return userInfoService.updateUser(userInfo, id);  
 	}
 
 	@PostMapping(value="/delete/{id}") 
 	public ResponseEntity<String> deleteTextbook( @PathVariable UUID id)  {   
-		return userService.deleteUser(id);	
+		return userInfoService.deleteUser(id);	
 	}				
 }

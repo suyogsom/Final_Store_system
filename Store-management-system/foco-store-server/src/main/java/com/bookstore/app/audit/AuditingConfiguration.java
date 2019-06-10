@@ -1,4 +1,4 @@
-package com.bookstore.app.Audit;
+package com.bookstore.app.audit;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "auditorProvider")
-public class JpaAuditingConfiguration {
+public class AuditingConfiguration {
 
     @Bean
     public AuditorAware<String> auditorProvider() {

@@ -1,4 +1,4 @@
-package com.bookstore.app.exceptionHandling;
+package com.bookstore.app.exceptions;
 
 public class TextBooksNotFoundException extends RuntimeException{
 	

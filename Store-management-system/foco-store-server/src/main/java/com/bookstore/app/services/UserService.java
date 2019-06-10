@@ -8,15 +8,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.bookstore.app.exceptionHandling.TextBooksNotFoundException;
+import com.bookstore.app.exceptions.UserNotFoundException;
 import com.bookstore.app.models.UserInfo;
-import com.bookstore.app.repositories.UserInfoRepo;
+import com.bookstore.app.repositories.UserRepo;
 
 @Service
-public class UserInfoService {
+public class UserService {
 	
 	@Autowired
-	private UserInfoRepo userRepo;
+	private UserRepo userRepo;
 
 	public List<UserInfo> getAllUsers(){		
 		return userRepo.findAll();		
@@ -24,7 +24,7 @@ public class UserInfoService {
 
 	public ResponseEntity<UserInfo> getUser(UUID id){ 
 		if(!availabilityCheck(id)) {
-			throw new TextBooksNotFoundException();
+			throw new UserNotFoundException();
 		}
 		else {
 			return new ResponseEntity<>(userRepo.findById(id).get(), HttpStatus.OK);
@@ -32,18 +32,13 @@ public class UserInfoService {
 	}
 
 	public ResponseEntity<UserInfo> addUser(UserInfo userInfo){	
-		
-		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null||userInfo.getStatus()==null) {
-			throw new TextBooksNotFoundException();
-		}
-		
 		userRepo.save(userInfo);
 		return new ResponseEntity<>(userInfo, HttpStatus.OK);
 	}
 
 	public ResponseEntity<UserInfo> updateUser(UserInfo userInfo, UUID id) {	
 		if(!availabilityCheck(id)) {
-			throw new TextBooksNotFoundException();
+			throw new UserNotFoundException();
 		}
 		else {
 			UserInfo userToUpdate = userRepo.findById(id).get();
@@ -55,7 +50,7 @@ public class UserInfoService {
 
 	public ResponseEntity<String> deleteUser(UUID id){	
 		if(!availabilityCheck(id)) {
-			throw new TextBooksNotFoundException();
+			throw new UserNotFoundException();
 		}
 		else {
 			userRepo.deleteById(id);

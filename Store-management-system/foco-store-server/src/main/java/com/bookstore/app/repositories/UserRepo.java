@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.bookstore.app.models.UserInfo;
 
 @Repository
-public interface UserInfoRepo extends JpaRepository<UserInfo, UUID>{
+public interface UserRepo extends JpaRepository<UserInfo, UUID>{
 
 }

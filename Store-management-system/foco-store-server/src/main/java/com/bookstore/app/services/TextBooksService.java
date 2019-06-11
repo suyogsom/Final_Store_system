@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
+import com.bookstore.app.exceptions.ISBNDuplicationException;
 import com.bookstore.app.exceptions.NullFieldsException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
 import com.bookstore.app.exceptions.TextBooksISBNFormatException;
-import com.bookstore.app.exceptions.UUIDAdditionException;
 import com.bookstore.app.exceptions.UUIDUpdateException;
 import com.bookstore.app.models.TextBooks;
 import com.bookstore.app.repositories.TextBooksRepo;
@@ -39,9 +39,10 @@ public class TextBooksService {
 
 	public ResponseEntity<TextBooks> addTextbook(TextBooks textBook){	
 		int count = 0 ;
-		if(textBook.getTextBookId().toString().length()>0) {
-			count++; throw new UUIDAdditionException(); 
-		}
+		/*
+		 * if(textBook.getTextBookId().toString().length()>0) { count++; throw new
+		 * UUIDAdditionException(); }
+		 */
 		if(textBook.getDepartment()==null||textBook.getDescription()==null||textBook.getIsbn()==null||textBook.getName()==null||textBook.getUnitPrice()==null) {
 			count++; throw new NullFieldsException(); 
 		}
@@ -53,6 +54,14 @@ public class TextBooksService {
 		}
 		if(!textBook.getIsbn().trim().matches("[0-9]+")) {
 			count++; throw new TextBooksISBNFormatException(); 
+		}
+		/*
+		 * checking for duplicate isbn's in database
+		 */
+		List<String> userList = textBooksRepo.findByIsbn();
+		long isbnCount = userList.stream().filter(e->e.equalsIgnoreCase(textBook.getIsbn())).count();
+		if(isbnCount > 0) {
+			count++; throw new ISBNDuplicationException();
 		}
 		if(count > 0) {
 			return new ResponseEntity<>(textBook, HttpStatus.BAD_REQUEST);
@@ -98,7 +107,7 @@ public class TextBooksService {
 		}
 		else {
 			textBooksRepo.deleteById(id);
-			return new ResponseEntity<>("[Book id " + id + " deleted]", HttpStatus.OK);
+			return new ResponseEntity<>("[ Book id " + id + " deleted ]", HttpStatus.OK);
 		}
 	}
 	

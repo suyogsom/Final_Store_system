@@ -13,8 +13,8 @@ import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
 import com.bookstore.app.exceptions.NullFieldsException;
 import com.bookstore.app.exceptions.PhoneNumberFormatException;
+import com.bookstore.app.exceptions.EmailDuplicationException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
-import com.bookstore.app.exceptions.UUIDAdditionException;
 import com.bookstore.app.exceptions.UUIDUpdateException;
 import com.bookstore.app.models.UserInfo;
 import com.bookstore.app.repositories.UserRepo;
@@ -25,7 +25,7 @@ public class UserService {
 	@Autowired
 	private UserRepo userRepo;
 
-	public List<UserInfo> getAllUsers(){		
+	public Iterable<UserInfo> getAllUsers(){		
 		return userRepo.findAll();		
 	}
 
@@ -40,9 +40,10 @@ public class UserService {
 
 	public ResponseEntity<UserInfo> addUser(UserInfo userInfo){	
 		int count = 0 ;
-		if(userInfo.getUserId().toString().length()>0) {
-			count++; throw new UUIDAdditionException(); 
-		}
+		/*
+		 * if(userInfo.getUserId().toString().length()>0) { count++; throw new
+		 * UUIDAdditionException(); }
+		 */
 		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null||userInfo.getStatus()==null) {
 			count++; throw new NullFieldsException(); 
 		}
@@ -61,6 +62,15 @@ public class UserService {
 		if((!userInfo.getEmail().contains("@"))||(!userInfo.getEmail().contains(".com"))) {
 			count++; throw new EmailFormatException(); 
 		}
+		/*
+		 * checking for duplicate email's in database
+		 */
+		List<String> userList = userRepo.findByEmail();	
+		long emailCount = userList.stream().filter(e->e.equalsIgnoreCase(userInfo.getEmail())).count();
+		if(emailCount > 0) {
+			count++; throw new EmailDuplicationException();
+		}
+		
 		if(count > 0) {
 			return new ResponseEntity<>(userInfo, HttpStatus.BAD_REQUEST);
 		}
@@ -111,7 +121,7 @@ public class UserService {
 		}
 		else {
 			userRepo.deleteById(id);
-			return new ResponseEntity<>("[User id " + id + " deleted successfully]", HttpStatus.OK);
+			return new ResponseEntity<>("[ User id " + id + " deleted successfully ]", HttpStatus.OK);
 		}
 	}
 	

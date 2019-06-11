@@ -10,14 +10,16 @@ import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.bookstore.app.exceptions.UUIDAdditionException;
+import com.bookstore.app.exceptions.EmailDuplicationException;
 import com.bookstore.app.exceptions.EmailFormatException;
 import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
+import com.bookstore.app.exceptions.ISBNDuplicationException;
 import com.bookstore.app.exceptions.NullFieldsException;
 import com.bookstore.app.exceptions.PhoneNumberFormatException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
 import com.bookstore.app.exceptions.TextBooksISBNFormatException;
+import com.bookstore.app.exceptions.UUIDAdditionException;
 import com.bookstore.app.exceptions.UUIDUpdateException;
 import com.bookstore.app.models.ExceptionResponse;
 
@@ -74,10 +76,22 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 	  } 
 	  
 	  @ExceptionHandler
-	  public final ResponseEntity<ExceptionResponse> handleDuplicateResourceException(UUIDAdditionException ex, WebRequest request) { 
+	  public final ResponseEntity<ExceptionResponse> handleUUIDAdditionException(UUIDAdditionException ex, WebRequest request) { 
 		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "you can not give UUID", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
 	    return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN); 
 	  } 
+	  
+	  @ExceptionHandler
+	  public final ResponseEntity<ExceptionResponse> handleEmailDuplicationException(EmailDuplicationException ex, WebRequest request) { 
+		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "user with this email exist already", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
+	    return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN); 
+	  } 
+	  
+	  @ExceptionHandler
+	  public final ResponseEntity<ExceptionResponse> handleISBNDuplicationException(ISBNDuplicationException ex, WebRequest request) { 
+		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "book with this ISBN exist already", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
+	    return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN); 
+	  }
 }
 
 

@@ -1,6 +1,5 @@
 package com.bookstore.app.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -25,7 +24,7 @@ public class UserController {
 	private UserService userService;
 	
 	@GetMapping(value="/allUsers")
-	public List<UserInfo> getAllUsers(){	
+	public Iterable<UserInfo> getAllUsers(){	
 		return userService.getAllUsers();
 	}	
 

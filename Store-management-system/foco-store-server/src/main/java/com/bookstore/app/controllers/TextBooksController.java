@@ -40,7 +40,7 @@ public class TextBooksController {
 	}
 
 	@PostMapping(value="/update/{id}")
-	public ResponseEntity<TextBooks> updateTextbook(@RequestBody TextBooks textbook, @PathVariable UUID id)  {	
+	public ResponseEntity<TextBooks> updateTextbook(@Valid @RequestBody TextBooks textbook, @PathVariable UUID id)  {	
 		return textBooksService.updateTextbook(textbook, id);  
 	}
 

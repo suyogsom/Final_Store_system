@@ -1,10 +1,10 @@
 package com.bookstore.app.exceptions;
 
-public class UserNotFoundException extends RuntimeException{
+public class UUIDUpdateException extends RuntimeException{
 	
 	private static final long serialVersionUID = 1L;
 
-	public UserNotFoundException(){
+	public UUIDUpdateException(){
     	super();
     }
 }

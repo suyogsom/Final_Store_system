@@ -3,6 +3,8 @@ package com.bookstore.app.controllers;
 import java.util.List;
 import java.util.UUID;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,12 +35,12 @@ public class UserController {
 	}
 
 	@PostMapping(value="/add") 
-	public ResponseEntity<UserInfo> addUser(@RequestBody UserInfo userInfo)  {	
+	public ResponseEntity<UserInfo> addUser(@Valid @RequestBody UserInfo userInfo)  {	
 		return userService.addUser(userInfo);   
 	}
 
 	@PostMapping(value="/update/{id}") 
-	public ResponseEntity<UserInfo> updateTextbook(@RequestBody UserInfo userInfo, @PathVariable UUID id)  {	
+	public ResponseEntity<UserInfo> updateTextbook(@Valid @RequestBody UserInfo userInfo, @PathVariable UUID id)  {	
 		return userService.updateUser(userInfo, id);  
 	}
 

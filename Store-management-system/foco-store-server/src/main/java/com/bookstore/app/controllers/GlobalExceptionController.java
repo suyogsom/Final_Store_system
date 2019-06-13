@@ -29,7 +29,7 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 
 	  @ExceptionHandler
 	  public final ResponseEntity<ExceptionResponse> handleResourceNotFoundException(ResourceNotFoundException ex, WebRequest request) { 
-		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "resource does not exist", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
+		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "resource with this ID does not exist", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
 	    return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND); 
 	  }
 	  

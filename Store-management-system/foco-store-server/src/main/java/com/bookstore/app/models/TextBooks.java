@@ -31,17 +31,15 @@ import com.bookstore.app.models.interfaces.TextBooksDepartments;
 @EntityListeners(AuditingEntityListener.class)
 public class TextBooks extends Auditable<String> {
 	
-	private UserInfo user;
+	private Student student;
+	private Faculty faculty;
 	private UUID textBookId;
 	private String name,description,isbn;
 	private Double unitPrice;
 	
 	private TextBooksDepartments department;
 
-	/**
-	 *  with all for update (all)
-	 */
-	public TextBooks(UserInfo user,UUID id, TextBooksDepartments department, String name, String description, String isbn, Double unitPrice) {		
+	public TextBooks(Student user, UUID id, TextBooksDepartments department, String name, String description, String isbn, Double unitPrice) {		
 		super(); 
 		this.textBookId = id;  
 		this.department=department;  
@@ -49,7 +47,20 @@ public class TextBooks extends Auditable<String> {
 		this.description = description; 
 		this.isbn =isbn;	
 		this.unitPrice = unitPrice;
-		this.user = user;
+		this.student = user;
+	}	
+	/**
+	 *  with all for update (all)
+	 */
+	public TextBooks(Faculty user, UUID id, TextBooksDepartments department, String name, String description, String isbn, Double unitPrice) {		
+		super(); 
+		this.textBookId = id;  
+		this.department=department;  
+		this.name = name;
+		this.description = description; 
+		this.isbn =isbn;	
+		this.unitPrice = unitPrice;
+		this.faculty = user;
 	}
 
 	/**
@@ -87,7 +98,7 @@ public class TextBooks extends Auditable<String> {
 	@Id
 	@Column(name = "textBookId",updatable = false, nullable = false) 
 	@Type(type="uuid-char")
-	@GeneratedValue(generator = "uuid2",strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "uuid2",strategy = GenerationType.SEQUENCE)
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
 	public UUID getTextBookId() {
 		return textBookId;
@@ -152,13 +163,32 @@ public class TextBooks extends Auditable<String> {
 		this.unitPrice = unitPrice;
 	}
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="userIdFK")
-	public UserInfo getUser() {
-		return user;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity=Faculty.class)
+	@JoinColumn(name="faculty_Id_FK")
+	public Faculty getFaculty() {
+		return faculty;
 	}
 
-	public void setUser(UserInfo user) {
-		this.user = user;
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,targetEntity=Student.class)
+	@JoinColumn(name="student_Id_FK")
+	public Student getStudent() {
+		return student;
+	}
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+//	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity=User.class)
+//	@JoinColumn(name="userIdFK")
+//	public User getUser() {
+//		return user;
+//	}
+//
+//	public void setUser(User user) {
+//		this.user = user;
+//	}	
 }

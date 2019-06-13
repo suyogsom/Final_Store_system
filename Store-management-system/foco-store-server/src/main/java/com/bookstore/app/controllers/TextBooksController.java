@@ -45,7 +45,7 @@ public class TextBooksController {
 	}
 
 	@PostMapping(value="/delete/{id}")
-	public ResponseEntity<String> deleteTextbook( @PathVariable UUID id)  {   
+	public ResponseEntity<String> deleteTextbook(@PathVariable UUID id)  {   
 		return textBooksService.deleteTextbook(id);	
 	}									
 }

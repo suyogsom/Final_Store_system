@@ -8,28 +8,28 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.bookstore.app.exceptions.EmailDuplicationException;
 import com.bookstore.app.exceptions.EmailFormatException;
 import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
 import com.bookstore.app.exceptions.NullFieldsException;
 import com.bookstore.app.exceptions.PhoneNumberFormatException;
-import com.bookstore.app.exceptions.EmailDuplicationException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
 import com.bookstore.app.exceptions.UUIDUpdateException;
-import com.bookstore.app.models.UserInfo;
-import com.bookstore.app.repositories.UserRepo;
+import com.bookstore.app.models.Faculty;
+import com.bookstore.app.repositories.FacultyRepo;
 
 @Service
-public class UserService {
+public class FacultyService {
 	
 	@Autowired
-	private UserRepo userRepo;
+	private FacultyRepo userRepo;
 
-	public Iterable<UserInfo> getAllUsers(){		
+	public List<Faculty> getAllUsers(){		
 		return userRepo.findAll();		
 	}
 
-	public ResponseEntity<UserInfo> getUser(UUID id){ 
+	public ResponseEntity<Faculty> getUser(UUID id){ 
 		if(!availabilityCheck(id)) {
 			throw new ResourceNotFoundException();
 		}
@@ -38,19 +38,19 @@ public class UserService {
 		}
 	}
 
-	public ResponseEntity<UserInfo> addUser(UserInfo userInfo){	
+	public ResponseEntity<Faculty> addUser(Faculty userInfo){	
 		int count = 0 ;
 		/*
 		 * if(userInfo.getUserId().toString().length()>0) { count++; throw new
 		 * UUIDAdditionException(); }
 		 */
-		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null||userInfo.getStatus()==null) {
+		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null) {
 			count++; throw new NullFieldsException(); 
 		}
-		if(userInfo.getAddress().trim().length()==0||userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getName().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
+		if(userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
 			count++; throw new EmptyBlankFieldsException(); 
 		}
-		if(userInfo.getAddress().trim().equals("null")||userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")||userInfo.getName().trim().equals("null")||userInfo.getPhoneNumber().trim().equals("null")) {
+		if(userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")) {
 			count++; throw new FieldValueNullException(); 
 		}
 		if(!userInfo.getPhoneNumber().trim().matches("[0-9]+")) {
@@ -80,18 +80,18 @@ public class UserService {
 		}	
 	}
 
-	public ResponseEntity<UserInfo> updateUser(UserInfo userInfo, UUID id) {	
+	public ResponseEntity<Faculty> updateUser(Faculty userInfo, UUID id) {	
 		if(!availabilityCheck(id)) {
 			throw new ResourceNotFoundException();
 		}
 		else {			
-			if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null||userInfo.getStatus()==null) {
+			if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null) {
 				throw new NullFieldsException(); 
 			}
-			if(userInfo.getAddress().trim().length()==0||userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getName().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
+			if(userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
 				throw new EmptyBlankFieldsException(); 
 			}
-			if(userInfo.getAddress().trim().equals("null")||userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")||userInfo.getName().trim().equals("null")||userInfo.getPhoneNumber().trim().equals("null")) {
+			if(userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")||userInfo.getPhoneNumber().trim().equals("null")) {
 				throw new FieldValueNullException(); 
 			}
 			if(!userInfo.getPhoneNumber().matches("[0-9]+")) {
@@ -108,7 +108,7 @@ public class UserService {
 				throw new UUIDUpdateException(); 
 			}			 
 			
-			UserInfo userToUpdate = userRepo.findById(id).get();
+			Faculty userToUpdate = userRepo.findById(id).get();
 			userToUpdate = userInfo;
 			userRepo.save(userToUpdate);
 		    return new ResponseEntity<>(userRepo.findById(id).get(), HttpStatus.OK);

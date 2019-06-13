@@ -1,8 +1,10 @@
 package com.bookstore.app.models;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
@@ -10,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -21,20 +25,23 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.bookstore.app.audit.Auditable;
 import com.bookstore.app.models.interfaces.UserGender;
-import com.bookstore.app.models.interfaces.UserStatus;
 
 @Entity
-@Table(name="USERINFO")
+@Table(name="User")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "USER_TYPE")
 @EntityListeners(AuditingEntityListener.class)
-public class UserInfo extends Auditable<String> {
+public class User extends Auditable<String> implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private UUID userId;
-	private String department,name,address,phoneNumber,email;
+	private String department,phoneNumber,email;
 
 	private UserGender gender;
-	private UserStatus status; 
+	private UserName name;
+	private UserAddress address;
 
-	public UserInfo(UUID id, String department, String name, String address, String phoneNumber, String email, UserGender gender, UserStatus status) {		
+	public User(UUID id, String department, UserName name, UserAddress address, String phoneNumber, String email, UserGender gender) {		
 		super(); 
 		this.userId = id;  
 		this.department=department;  
@@ -43,10 +50,9 @@ public class UserInfo extends Auditable<String> {
 		this.phoneNumber =phoneNumber;	
 		this.email = email;
 		this.gender = gender;
-		this.status = status;
 	}
 	
-	public UserInfo(String department, String name, String address, String phoneNumber, String email,UserGender gender, UserStatus status) {		
+	public User(String department, UserName name, UserAddress address, String phoneNumber, String email,UserGender gender) {		
 		super();   
 		this.department=department;  
 		this.name = name;
@@ -54,13 +60,15 @@ public class UserInfo extends Auditable<String> {
 		this.phoneNumber =phoneNumber;	
 		this.email = email;
 		this.gender = gender;
-		this.status = status;
-	}	
+	}		
+	
+	public User() {
+	}
 
 	@Id
 	@Column(name = "userId",updatable = false, nullable = false)
 	@Type(type="uuid-char")
-	@GeneratedValue(generator = "uuid2",strategy = GenerationType.AUTO)
+	@GeneratedValue(generator = "uuid2",strategy = GenerationType.SEQUENCE)
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
 	public UUID getUserId() {
 		return userId;
@@ -68,19 +76,14 @@ public class UserInfo extends Auditable<String> {
 
 	public void setUserId(UUID userId) {
 		this.userId = userId;
-	}
-	
-	public UserInfo() {
 	}	
 	
 	@Column(name = "name")
-	@NotBlank(message = "name must not be empty")
-	@Size(max = 50)
-	public String getName() {
+	public UserName getName() {
 		return name;
 	}
 			
-	public void setName(String name) {
+	public void setName(UserName name) {
 		this.name = name;
 	}			
 	
@@ -96,14 +99,12 @@ public class UserInfo extends Auditable<String> {
 	}
 
 	@Column(name = "address")
-	@NotBlank(message = "address must not be empty")
-	@Size(max = 50)
-	public String getAddress() {
+	public UserAddress getAddress() {
 		return address;
 	}
 
 
-	public void setAddress(String address) {
+	public void setAddress(UserAddress address) {
 		this.address = address;
 	}
 
@@ -140,49 +141,4 @@ public class UserInfo extends Auditable<String> {
 	public void setGender(UserGender gender) {
 		this.gender = gender;
 	}
-
-	@Enumerated(EnumType.STRING)
-	@Column(name="status")
-	public UserStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(UserStatus status) {
-		this.status = status;
-	}
-
-	
-	// @Size(min = 1, max = 40)
-	// @Pattern(regexp = "[^0-9]*", message = "Must not contain numbers")
-	// @Digits(fraction = 0, integer = 12) , for phone number 
-	// @Setter(AccessLevel.PUBLIC)
-	// @Getter(AccessLevel.PUBLIC)
-	// @NotEmpty(message = "first name must not be empty")
-	
-		
-//	this is for bi directional one to many and many to one
-	
-//	private List<TextBooks> booksList = new ArrayList<TextBooks>();
-	
-//	public UserInfo(List<TextBooks> textBooksList,Integer id, String department, String name, String address, String phoneNumber, String email) {		
-//		super(); 
-//		this.userId = id;  
-//		this.department=department;  
-//		this.name = name;
-//		this.address = address; 
-//		this.phoneNumber =phoneNumber;	
-//		this.email = email;
-//		this.booksList = textBooksList;
-//	}
-	
-		
-//	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//	@ElementCollection
-//	public List<TextBooks> getTextBooks() {
-//		return booksList;
-//	}
-//
-//	public void setTextBooks(List<TextBooks> textBooks) {
-//		this.booksList = textBooks;
-//	}	
 }

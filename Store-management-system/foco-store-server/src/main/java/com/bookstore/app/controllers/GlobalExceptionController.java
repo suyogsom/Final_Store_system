@@ -16,7 +16,7 @@ import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
 import com.bookstore.app.exceptions.ISBNDuplicationException;
 import com.bookstore.app.exceptions.NullFieldsException;
-import com.bookstore.app.exceptions.PhoneNumberFormatException;
+import com.bookstore.app.exceptions.NumberFormatException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
 import com.bookstore.app.exceptions.TextBooksISBNFormatException;
 import com.bookstore.app.exceptions.UUIDAdditionException;
@@ -58,8 +58,8 @@ public class GlobalExceptionController extends ResponseEntityExceptionHandler {
 	  }
 	  
 	  @ExceptionHandler
-	  public final ResponseEntity<ExceptionResponse> handlePhoneNumberHasCharException(PhoneNumberFormatException ex, WebRequest request) { 
-		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "phone number contains character", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
+	  public final ResponseEntity<ExceptionResponse> handleNumberHasCharException(NumberFormatException ex, WebRequest request) { 
+		ExceptionResponse exceptionResponse = new ExceptionResponse(LocalDateTime.now(), "number contains character", "path is " + ((ServletWebRequest)request).getRequest().getRequestURL().toString());
 	    return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST); 
 	  }
 	  

@@ -10,10 +10,10 @@ import org.springframework.stereotype.Repository;
 import com.bookstore.app.models.TextBooks;
 
 @Repository
-public interface TextBooksRepo extends JpaRepository<TextBooks, UUID>{ 
-
-	@Query(value="SELECT isbn FROM BookStoreDB.textbooks",nativeQuery=true)
-	List<String> findByIsbn();		
+public interface RentRepo extends JpaRepository<TextBooks, UUID>{ 
+		
+	@Query(value="SELECT text_book_id, faculty_id_fk, student_id_fk FROM BookStoreDB.textbooks",nativeQuery=true)
+	List<String> findAllBooks();	
 }
 
 

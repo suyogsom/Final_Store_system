@@ -13,7 +13,7 @@ import com.bookstore.app.exceptions.EmailFormatException;
 import com.bookstore.app.exceptions.EmptyBlankFieldsException;
 import com.bookstore.app.exceptions.FieldValueNullException;
 import com.bookstore.app.exceptions.NullFieldsException;
-import com.bookstore.app.exceptions.PhoneNumberFormatException;
+import com.bookstore.app.exceptions.NumberFormatException;
 import com.bookstore.app.exceptions.ResourceNotFoundException;
 import com.bookstore.app.exceptions.UUIDUpdateException;
 import com.bookstore.app.models.Student;
@@ -38,78 +38,78 @@ public class StudentService {
 		}
 	}
 
-	public ResponseEntity<Student> addUser(Student userInfo){	
+	public ResponseEntity<Student> addUser(Student user){	
 		int count = 0 ;
 		/*
 		 * if(userInfo.getUserId().toString().length()>0) { count++; throw new
 		 * UUIDAdditionException(); }
 		 */
-		if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null) {
-			count++; throw new NullFieldsException(); 
+		if(user.getProgram()==null||user.getStatus()==null||user.getJoiningDate()==null||user.getGraduationDate()==null||user.getAddress().getApartment()==null||user.getAddress().getCity()==null||user.getAddress().getCountry()==null||user.getAddress().getState()==null||user.getAddress().getStreet()==null||user.getAddress().getZipcode()==null||user.getDepartment()==null||user.getEmail()==null||user.getGender()==null||user.getName().getFirstName()==null||user.getName().getLastName()==null||user.getName().getMiddleName()==null||user.getPhoneNumber()==null) {
+			count++ ; throw new NullFieldsException(); 
 		}
-		if(userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
-			count++; throw new EmptyBlankFieldsException(); 
+		if(user.getProgram().trim().length()==0||user.getStatus().trim().length()==0||user.getAddress().getApartment().trim().length()==0||user.getAddress().getCity().trim().length()==0||user.getAddress().getCountry().trim().length()==0||user.getAddress().getState().trim().length()==0||user.getAddress().getStreet().trim().length()==0||user.getAddress().getZipcode().trim().length()==0||user.getDepartment().trim().length()==0||user.getName().getFirstName().trim().length()==0||user.getName().getLastName().trim().length()==0||user.getName().getMiddleName().trim().length()==0||user.getEmail().trim().length()==0||user.getPhoneNumber().trim().length()==0) {
+			count++ ; throw new EmptyBlankFieldsException(); 
 		}
-		if(userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")) {
-			count++; throw new FieldValueNullException(); 
+		if(user.getProgram().trim().equalsIgnoreCase("null")||user.getStatus().trim().equalsIgnoreCase("null")||user.getAddress().getApartment().trim().equalsIgnoreCase("null")||user.getAddress().getCity().trim().equalsIgnoreCase("null")||user.getAddress().getCountry().trim().equalsIgnoreCase("null")||user.getAddress().getState().trim().equalsIgnoreCase("null")||user.getAddress().getStreet().trim().equalsIgnoreCase("null")||user.getAddress().getZipcode().trim().equalsIgnoreCase("null")||user.getName().getFirstName().trim().equalsIgnoreCase("null")||user.getName().getLastName().trim().equalsIgnoreCase("null")||user.getName().getMiddleName().trim().equalsIgnoreCase("null")||user.getDepartment().trim().equalsIgnoreCase("null")||user.getEmail().trim().equalsIgnoreCase("null")||user.getPhoneNumber().trim().equalsIgnoreCase("null")) {
+			throw new FieldValueNullException(); 
 		}
-		if(!userInfo.getPhoneNumber().trim().matches("[0-9]+")) {
-			count++; throw new PhoneNumberFormatException(); 
+		if((!user.getPhoneNumber().matches("[0-9]+"))||(!user.getPhoneNumber().matches("[0-9]+"))) {
+			count++; throw new NumberFormatException(); 
 		}
 		/*
 		 * this email check is just for top level Internet domains,  does not includes all country domains
 		 */
-		if((!userInfo.getEmail().contains("@"))||(!userInfo.getEmail().contains(".com"))) {
+		if((!user.getEmail().contains("@"))||(!user.getEmail().contains(".com"))) {
 			count++; throw new EmailFormatException(); 
 		}
 		/*
 		 * checking for duplicate email's in database
 		 */
 		List<String> userList = userRepo.findByEmail();	
-		long emailCount = userList.stream().filter(e->e.equalsIgnoreCase(userInfo.getEmail())).count();
+		long emailCount = userList.stream().filter(e->e.equalsIgnoreCase(user.getEmail())).count();
 		if(emailCount > 0) {
 			count++; throw new EmailDuplicationException();
 		}
 		
 		if(count > 0) {
-			return new ResponseEntity<>(userInfo, HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
 		}
 		else {
-			userRepo.save(userInfo);
-			return new ResponseEntity<>(userInfo, HttpStatus.OK);
+			userRepo.save(user);
+			return new ResponseEntity<>(user, HttpStatus.OK);
 		}	
 	}
 
-	public ResponseEntity<Student> updateUser(Student userInfo, UUID id) {	
+	public ResponseEntity<Student> updateUser(Student user, UUID id) {	
 		if(!availabilityCheck(id)) {
 			throw new ResourceNotFoundException();
 		}
 		else {			
-			if(userInfo.getAddress()==null||userInfo.getDepartment()==null||userInfo.getEmail()==null||userInfo.getGender()==null||userInfo.getName()==null||userInfo.getPhoneNumber()==null) {
+			if(user.getProgram()==null||user.getStatus()==null||user.getJoiningDate()==null||user.getGraduationDate()==null||user.getAddress().getApartment()==null||user.getAddress().getCity()==null||user.getAddress().getCountry()==null||user.getAddress().getState()==null||user.getAddress().getStreet()==null||user.getAddress().getZipcode()==null||user.getDepartment()==null||user.getEmail()==null||user.getGender()==null||user.getName().getFirstName()==null||user.getName().getLastName()==null||user.getName().getMiddleName()==null||user.getPhoneNumber()==null) {
 				throw new NullFieldsException(); 
 			}
-			if(userInfo.getDepartment().trim().length()==0||userInfo.getEmail().trim().length()==0||userInfo.getPhoneNumber().trim().length()==0) {
+			if(user.getProgram().trim().length()==0||user.getStatus().trim().length()==0||user.getAddress().getApartment().trim().length()==0||user.getAddress().getCity().trim().length()==0||user.getAddress().getCountry().trim().length()==0||user.getAddress().getState().trim().length()==0||user.getAddress().getStreet().trim().length()==0||user.getAddress().getZipcode().trim().length()==0||user.getDepartment().trim().length()==0||user.getName().getFirstName().trim().length()==0||user.getName().getLastName().trim().length()==0||user.getName().getMiddleName().trim().length()==0||user.getEmail().trim().length()==0||user.getPhoneNumber().trim().length()==0) {
 				throw new EmptyBlankFieldsException(); 
 			}
-			if(userInfo.getDepartment().trim().equals("null")||userInfo.getEmail().trim().equals("null")||userInfo.getPhoneNumber().trim().equals("null")) {
+			if(user.getProgram().trim().equalsIgnoreCase("null")||user.getStatus().trim().equalsIgnoreCase("null")||user.getAddress().getApartment().trim().equalsIgnoreCase("null")||user.getAddress().getCity().trim().equalsIgnoreCase("null")||user.getAddress().getCountry().trim().equalsIgnoreCase("null")||user.getAddress().getState().trim().equalsIgnoreCase("null")||user.getAddress().getStreet().trim().equalsIgnoreCase("null")||user.getAddress().getZipcode().trim().equalsIgnoreCase("null")||user.getName().getFirstName().trim().equalsIgnoreCase("null")||user.getName().getLastName().trim().equalsIgnoreCase("null")||user.getName().getMiddleName().trim().equalsIgnoreCase("null")||user.getDepartment().trim().equalsIgnoreCase("null")||user.getEmail().trim().equalsIgnoreCase("null")||user.getPhoneNumber().trim().equalsIgnoreCase("null")) {
 				throw new FieldValueNullException(); 
 			}
-			if(!userInfo.getPhoneNumber().matches("[0-9]+")) {
-				throw new PhoneNumberFormatException(); 
+			if((!user.getPhoneNumber().matches("[0-9]+"))||(!user.getPhoneNumber().matches("[0-9]+"))) {
+				throw new NumberFormatException(); 
 			}
 			/*
 			 * this email check is just for top level Internet domains,  does not includes all country domains
 			 */
-			if((!userInfo.getEmail().contains("@"))||(!userInfo.getEmail().contains(".com"))) {			
+			if((!user.getEmail().contains("@"))||(!user.getEmail().contains(".com"))) {			
 				throw new EmailFormatException(); 
 			}
 			
-			if(!availabilityCheck(userInfo.getUserId())) { 
+			if(!availabilityCheck(user.getUserId())) { 
 				throw new UUIDUpdateException(); 
 			}			 
 			
 			Student userToUpdate = userRepo.findById(id).get();
-			userToUpdate = userInfo;
+			userToUpdate = user;
 			userRepo.save(userToUpdate);
 		    return new ResponseEntity<>(userRepo.findById(id).get(), HttpStatus.OK);
 		}		

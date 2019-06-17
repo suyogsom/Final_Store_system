@@ -38,7 +38,9 @@ public class TextBooks extends Auditable<String> {
 	private Double unitPrice;
 	
 	private TextBooksDepartments department;
-
+	/**
+	 *  with all for update (all) Student
+	 */
 	public TextBooks(Student user, UUID id, TextBooksDepartments department, String name, String description, String isbn, Double unitPrice) {		
 		super(); 
 		this.textBookId = id;  
@@ -50,7 +52,7 @@ public class TextBooks extends Auditable<String> {
 		this.student = user;
 	}	
 	/**
-	 *  with all for update (all)
+	 *  with all for update (all) Faculty
 	 */
 	public TextBooks(Faculty user, UUID id, TextBooksDepartments department, String name, String description, String isbn, Double unitPrice) {		
 		super(); 

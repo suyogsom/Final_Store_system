@@ -17,8 +17,6 @@ public class StoreApiDatabaseApplication  {
 		LOGGER.error("Messages logged at ERROR level");
 		LOGGER.warn("Messages logged at WARN level");
 		LOGGER.info("Messages logged at INFO level");
-		LOGGER.debug("Messages logged at DEBUG level");
-		
-		
+		LOGGER.debug("Messages logged at DEBUG level");				
 	}
 }

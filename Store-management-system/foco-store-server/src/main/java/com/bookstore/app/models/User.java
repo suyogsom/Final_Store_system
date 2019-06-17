@@ -122,8 +122,7 @@ public class User extends Auditable<String> implements Serializable{
 	@Email(message = "email should be a valid email")
 	@NotBlank(message = "email must not be empty")
 	@Column(name = "email",unique=true)
-	@Size(max = 50)
-	
+	@Size(max = 50)	
 	public String getEmail() {
 		return email;
 	}

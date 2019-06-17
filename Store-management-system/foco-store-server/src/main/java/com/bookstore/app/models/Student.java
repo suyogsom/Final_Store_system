@@ -7,6 +7,8 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.bookstore.app.models.interfaces.UserGender;
 
@@ -16,9 +18,6 @@ import com.bookstore.app.models.interfaces.UserGender;
 @PrimaryKeyJoinColumn(name="user_ID_FK")
 public class Student extends User{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private LocalDate joiningDate, graduationDate;
 	private String status;
@@ -38,6 +37,8 @@ public class Student extends User{
 		this.program = program;
 	}
 
+	@NotBlank(message = "joiningDate must not be empty")
+	@Size(max = 50)	
 	public LocalDate getJoiningDate() {
 		return joiningDate;
 	}
@@ -46,6 +47,8 @@ public class Student extends User{
 		this.joiningDate = joiningDate;
 	}
 
+	@NotBlank(message = "graduationDate must not be empty")
+	@Size(max = 50)	
 	public LocalDate getGraduationDate() {
 		return graduationDate;
 	}
@@ -54,6 +57,8 @@ public class Student extends User{
 		this.graduationDate = graduationDate;
 	}
 
+	@NotBlank(message = "status must not be empty")
+	@Size(max = 50)	
 	public String getStatus() {
 		return status;
 	}
@@ -62,6 +67,8 @@ public class Student extends User{
 		this.status = status;
 	}
 
+	@NotBlank(message = "program must not be empty")
+	@Size(max = 50)	
 	public String getProgram() {
 		return program;
 	}

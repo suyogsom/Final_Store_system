@@ -13,8 +13,7 @@ import com.bookstore.app.models.Student;
 public interface StudentRepo extends JpaRepository<Student, UUID>{ 
 
 	@Query(value="SELECT email FROM BookStoreDB.user",nativeQuery=true)
-	List<String> findByEmail();	
-	
+	List<String> findByEmail();			
 }
 
 

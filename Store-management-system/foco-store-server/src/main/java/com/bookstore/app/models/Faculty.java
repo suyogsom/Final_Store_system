@@ -34,8 +34,6 @@ public class Faculty extends User{
 		this.program = program;
 	}
 
-	@NotBlank(message = "joiningDate must not be empty")
-	@Size(max = 50)	
 	public LocalDate getJoiningDate() {
 		return joiningDate;
 	}
@@ -44,8 +42,6 @@ public class Faculty extends User{
 		this.joiningDate = joiningDate;
 	}
 
-	@NotBlank(message = "tenuarDate must not be empty")
-	@Size(max = 50)	
 	public LocalDate getTenuarDate() {
 		return tenuarDate;
 	}

@@ -40,12 +40,12 @@ public class FacultyController {
 	}
 
 	@PostMapping(value="/update/{id}") 
-	public ResponseEntity<Faculty> updateTextbook(@Valid @RequestBody Faculty userInfo, @PathVariable UUID id)  {	
+	public ResponseEntity<Faculty> updateUser(@Valid @RequestBody Faculty userInfo, @PathVariable UUID id)  {	
 		return userService.updateUser(userInfo, id);  
 	}
 
 	@PostMapping(value="/delete/{id}") 
-	public ResponseEntity<String> deleteTextbook( @PathVariable UUID id)  {   
+	public ResponseEntity<String> deleteUser( @PathVariable UUID id)  {   
 		return userService.deleteUser(id);	
 	}				
 }

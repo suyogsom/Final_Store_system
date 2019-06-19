@@ -42,17 +42,17 @@ public class FacultyControllerTest {
 	  }
  
     @Test
-    @DisplayName("Getting all users - faculty")
-    public void getAllTextBooksTest(){
+    @DisplayName("Getting all faculty user")
+    public void getAllFaculty(){
     	UUID uuid1 = uuidGenerator();
     	UUID uuid2 = uuidGenerator();
     	
-    	UserName name1 = new UserName("anup","dinesh","patil");
-    	UserName name2 = new UserName("pankaj","rajesh","jain");
+    	UserName name1 = nameProvider();
+    	UserName name2 = nameProvider();
     	
-    	UserAddress address1 = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
-    	UserAddress address2 = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");   	
-
+    	UserAddress address1 = addressProvider();
+    	UserAddress address2 = addressProvider();
+    	
         List<Faculty> list = new ArrayList<Faculty>();
     	Faculty faculty1 = new Faculty(uuid1,"ECE",name1,address1,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
     	Faculty faculty2 = new Faculty(uuid2,"CIS",name2,address2,"9705819699","anup.patil1@gmail.com",UserGender.FEMALE,LocalDate.of(2019, 4, 11),LocalDate.of(2019, 9, 13),"undergrad");
@@ -68,19 +68,14 @@ public class FacultyControllerTest {
         assertEquals("CIS", facultyList.get(1).getDepartment());
       }
     
-    public UUID uuidGenerator() {
-    	UUID uuid = UUID.randomUUID();
-    	return uuid;
-    }
-    
     @Test
-    @DisplayName("Getting a textbook with ID")
+    @DisplayName("Getting a faculty with ID")
     public void getFacultyById() {
     	UUID uuid = uuidGenerator();
     	
-    	UserName name = new UserName("anup","dinesh","patil");
+    	UserName name = nameProvider();
     	
-    	UserAddress address = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
+    	UserAddress address = addressProvider();
 
     	Faculty faculty = new Faculty(uuid,"ECE",name,address,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
 
@@ -94,14 +89,14 @@ public class FacultyControllerTest {
 	  }
     
     @Test
-    @DisplayName("Adding a user - faculty")
+    @DisplayName("Adding a faculty")
     public void addFaculty() {
     	UUID uuid = uuidGenerator();
     	
-    	UserName name = new UserName("anup","dinesh","patil");
+    	UserName name = nameProvider();
     	
-    	UserAddress address = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
-
+    	UserAddress address = addressProvider();
+    	
     	Faculty faculty = new Faculty(uuid,"ECE",name,address,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
 
     	ResponseEntity<Faculty> responseFaculty = new ResponseEntity<>(faculty, HttpStatus.OK);
@@ -113,58 +108,52 @@ public class FacultyControllerTest {
         assertEquals("ECE", facultyResult.getBody().getDepartment());
       }
    
-//    @Test
-//    @DisplayName("Update a faculty")
-//    public void updateFaculty() {
-//    	UUID uuid = uuidGenerator();
-//    	
-//    	UserName name = new UserName("anup","dinesh","patil");
-//    	
-//    	UserAddress address = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
-//
-//    	Faculty faculty = new Faculty(uuid,"ECE",name,address,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
-//
-//    	ResponseEntity<Faculty> responseFaculty = new ResponseEntity<>(faculty, HttpStatus.OK);
-//    	
-//        when(facultyService.addUser(faculty)).thenReturn(responseFaculty);
-//        
-//        ResponseEntity<Faculty> facultyResult = facultyController.addUser(faculty);
-//
-//        assertEquals("ECE", facultyResult.getBody().getDepartment());
-//      }
-//    
-//    @Test
-//    @DisplayName("Delete a faculty")
-//    public void deleteFaculty() {
-//    	UUID uuid1 = uuidGenerator();
-//    	UUID uuid2 = uuidGenerator();
-//    	
-//    	UserName name1 = new UserName("anup","dinesh","patil");
-//    	UserName name2 = new UserName("pankaj","rajesh","jain");
-//    	
-//    	UserAddress address1 = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
-//    	UserAddress address2 = new UserAddress("d-203","west plum","fort collins","CO","80521","USA");   	
-//
-//        List<Faculty> list = new ArrayList<Faculty>();
-//    	Faculty faculty1 = new Faculty(uuid1,"ECE",name1,address1,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
-//    	Faculty faculty2 = new Faculty(uuid2,"CIS",name2,address2,"9705819699","anup.patil1@gmail.com",UserGender.FEMALE,LocalDate.of(2019, 4, 11),LocalDate.of(2019, 9, 13),"undergrad");
-//         
-//        list.add(faculty1);
-//        list.add(faculty2);
-//         
-//        when(facultyService.getAllUsers()).thenReturn(list);
-//         
-//        List<Faculty> facultyList = (List<Faculty>) facultyController.getAllUsers();
-//         
-//        assertEquals(2, facultyList.size());
-//        assertEquals("CIS", facultyList.get(1).getDepartment());
-//       
-//        ResponseEntity<String> responseFaculty = new ResponseEntity<>("Faculty deleted", HttpStatus.OK);
-//        
-//        when(facultyService.deleteUser(uuid1)).thenReturn(responseFaculty);
-//        
-//        ResponseEntity<String> facultyResult = facultyController.deleteTextbook(uuid2);
-//        
-//        assertEquals(1, facultyResult.getBody());
-//    }
+	@Test
+    @DisplayName("Update a faculty")
+    public void updateFaculty() {
+    	UUID uuid = uuidGenerator();
+    	
+    	UserName name = nameProvider();
+    	
+    	UserAddress address = addressProvider();
+
+    	Faculty faculty = new Faculty(uuid,"ECE",name,address,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
+    	
+    	Faculty facultyUpdate = new Faculty(uuid,"ECE-update",name,address,"9705819659","anup.patil@gmail.com",UserGender.MALE,LocalDate.of(2019, 6, 11),LocalDate.of(2019, 9, 13),"undergrad");
+    	
+    	ResponseEntity<Faculty> responseFaculty = new ResponseEntity<>(facultyUpdate, HttpStatus.OK);
+
+        when(facultyService.updateUser(faculty, uuid)).thenReturn(responseFaculty);
+        
+        ResponseEntity<Faculty> facultyResult = facultyController.updateUser(faculty, uuid);
+
+        assertEquals("ECE-update", facultyResult.getBody().getDepartment());
+      }
+    
+    @Test
+    @DisplayName("Delete a faculty")
+    public void deleteFaculty() {
+    	UUID uuid1 = uuidGenerator();    	
+       
+        ResponseEntity<String> responseFaculty = new ResponseEntity<>("Faculty deleted", HttpStatus.OK);
+        
+        when(facultyService.deleteUser(uuid1)).thenReturn(responseFaculty);
+        
+        ResponseEntity<String> facultyResult = facultyController.deleteUser(uuid1);
+        
+        assertEquals("Faculty deleted", facultyResult.getBody());
+    }   
+    
+    public UUID uuidGenerator() {
+    	UUID uuid = UUID.randomUUID();
+    	return uuid;
+    }
+    
+    public UserName nameProvider() {
+    	return new UserName("anup","dinesh","patil"); 
+    }
+    
+    public UserAddress addressProvider() {
+    	return new UserAddress("d-203","west plum","fort collins","CO","80521","USA");
+    }
 }

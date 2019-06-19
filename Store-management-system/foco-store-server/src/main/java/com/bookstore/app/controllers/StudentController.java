@@ -40,12 +40,12 @@ public class StudentController {
 	}
 
 	@PostMapping(value="/update/{id}") 
-	public ResponseEntity<Student> updateTextbook(@Valid @RequestBody Student userInfo, @PathVariable UUID id)  {	
+	public ResponseEntity<Student> updateUser(@Valid @RequestBody Student userInfo, @PathVariable UUID id)  {	
 		return userService.updateUser(userInfo, id);  
 	}
 
 	@PostMapping(value="/delete/{id}") 
-	public ResponseEntity<String> deleteTextbook( @PathVariable UUID id)  {   
+	public ResponseEntity<String> deleteUser( @PathVariable UUID id)  {   
 		return userService.deleteUser(id);	
 	}				
 }

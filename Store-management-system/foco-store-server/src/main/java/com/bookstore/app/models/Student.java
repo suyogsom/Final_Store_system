@@ -3,11 +3,11 @@ package com.bookstore.app.models;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.bookstore.app.models.interfaces.UserGender;
@@ -52,8 +52,8 @@ public class Student extends User{
 	public void setGraduationDate(LocalDate graduationDate) {
 		this.graduationDate = graduationDate;
 	}
-
-	@NotBlank(message = "status must not be empty")
+	
+	@Column(name = "status", nullable = false)
 	@Size(max = 50)	
 	public String getStatus() {
 		return status;
@@ -63,7 +63,7 @@ public class Student extends User{
 		this.status = status;
 	}
 
-	@NotBlank(message = "program must not be empty")
+	@Column(name = "program", nullable = false)
 	@Size(max = 50)	
 	public String getProgram() {
 		return program;

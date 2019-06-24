@@ -108,8 +108,7 @@ public class User extends Auditable<String> implements Serializable{
 		this.address = address;
 	}
 
-	@Column(name = "phoneNumber")
-	@NotBlank(message = "phone number must not be empty")
+	@Column(name = "phoneNumber", nullable = false)
 	@Size(max = 50)
 	public String getPhoneNumber() {
 		return phoneNumber;
@@ -120,7 +119,6 @@ public class User extends Auditable<String> implements Serializable{
 	}
 
 	@Email(message = "email should be a valid email")
-	@NotBlank(message = "email must not be empty")
 	@Column(name = "email",unique=true)
 	@Size(max = 50)	
 	public String getEmail() {
